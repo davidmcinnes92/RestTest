@@ -6,6 +6,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import com.example.RestTest.model.Greeting;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,9 +48,9 @@ public class GreetingController {
     }
 
     @PostMapping( value = "/greeting", consumes = "application/json", produces = "application/json")
-    public Set<Greeting> createGreeting(@RequestBody String message) {
+    public ResponseEntity<Set<Greeting>> createGreeting(@RequestBody String message) {
         greetingSet.add(new Greeting(counter.incrementAndGet(), message));
-        return greetingSet;
+        return new ResponseEntity<Set<Greeting>>(greetingSet, HttpStatus.CREATED);
     } 
 
     @DeleteMapping("greeting/{id}")
