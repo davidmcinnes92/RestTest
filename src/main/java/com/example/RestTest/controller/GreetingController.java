@@ -1,5 +1,6 @@
 package com.example.RestTest.controller;
 
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
@@ -16,6 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller class with Web API operations on Greetings.
+ * @author David McInnes
+ * @since 1.0
+ */
 @RestController
 public class GreetingController {
 
@@ -36,6 +42,19 @@ public class GreetingController {
         for (Greeting g: greetingSet) {
             if (g.getId() == id) {
                 return g;
+            }
+        }
+
+        return null;
+    }
+
+    @GetMapping("greeting/{id}/encoded")
+    public String encodedGreeting(@PathVariable int id) {
+
+        // Iterate through the set finding the ID
+        for (Greeting g: greetingSet) {
+            if (g.getId() == id) {
+                return encodeBase64(g.getContent());
             }
         }
 
@@ -67,5 +86,13 @@ public class GreetingController {
         return null;
     }
 
-    
+    public static String encodeBase64(String textToEncode) {
+        byte[] encodedBytes = Base64.getEncoder().encode(textToEncode.getBytes());
+        return new String(encodedBytes);
+    }
+
+    public static String decodeBase64(String base64ToDecode) {
+        byte[] decodedBytes = Base64.getDecoder().decode(base64ToDecode);
+        return new String(decodedBytes);
+    }
 }
