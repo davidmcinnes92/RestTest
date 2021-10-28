@@ -7,14 +7,15 @@ import java.time.*;
  * @author David McInnes
  * @since 1.0
  */
-public class Metadata {
+public class Episode {
     
-    public long id;
+    public long episodeID;
+    public long showID;
     public String description;
     public LocalDateTime dateAvailable;
 
     // Empty constructor
-    public Metadata() {
+    public Episode() {
 
     }
 
@@ -23,8 +24,9 @@ public class Metadata {
      * @param id
      * @param description
      */
-    public Metadata(long id, String description) {
-        this.id = id;
+    public Episode(long id, String description) {
+        this.episodeID = id;
+        this.showID = id;
         this.description = description;
         this.dateAvailable = java.time.LocalDateTime.now();
     }
@@ -34,7 +36,7 @@ public class Metadata {
     }
 
     public long getId() {
-        return id;
+        return episodeID;
     }
 
     public LocalDateTime getDateAvailable() {
@@ -43,5 +45,13 @@ public class Metadata {
 
     public void setDateAvailable(LocalDateTime dateAvailable) {
         this.dateAvailable = dateAvailable;
+    }
+
+    public long getEpisodeID() {
+        return episodeID;
+    }
+
+    public void setEpisodeID(long episodeID) {
+        this.episodeID = episodeID;
     }
 }
